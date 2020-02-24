@@ -1,0 +1,60 @@
+name: flutter_firebase_login_boilerplate
+description: A simple authentication with firebase boilerplate.
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.2.2 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^0.1.2
+
+  # to make HTTP requests with services
+  http: ^0.12.0+2
+
+  # to implement BLoC pattern
+  rxdart: ^0.22.2
+  flutter_bloc: ^2.0.1
+
+  # to make comparisons between objects
+  equatable: ^1.0.0
+
+  # to allow IOS and Android app to get access to the internet
+  connectivity: ^0.4.4
+
+  # to use SharedPreferences (Android) and NSUserdefaults (IOS)
+  shared_preferences: ^0.5.4
+
+  # to allow dynamic theming and others
+  provider: ^3.1.0
+
+  # for firebase connectivity
+  firebase_core: ^0.4.0+9
+  # firebase_analytics: ^5.0.2
+  firebase_auth: ^0.15.3
+
+  # to display stylizable snackbar
+  flushbar: ^1.9.1
+
+  #to easily implement gradient widgets
+  gradient_widgets: ^0.5.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+
+flutter:
+  uses-material-design: true
+
+fonts: 
+  
+  # Main font for the app
+  - family: Roboto
+    fonts:
+    - asset: assets/fonts/Roboto-Light.ttf
+      weight: 200
+    - asset: assets/fonts/Roboto-Medium.ttf
+      weight: 400
