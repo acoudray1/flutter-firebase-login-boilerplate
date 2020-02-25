@@ -5,6 +5,11 @@ import 'package:flutter_firebase_login_boilerplate/blocs/application/root_events
 import 'package:flutter_firebase_login_boilerplate/blocs/home/home_bloc.dart';
 import 'package:flutter_firebase_login_boilerplate/blocs/home/home_states.dart';
 import 'package:flutter_firebase_login_boilerplate/configuration/theme/custom_font_style.dart';
+import 'package:flutter_firebase_login_boilerplate/configuration/theme/theme_notifier.dart';
+import 'package:flutter_firebase_login_boilerplate/providers/repositories/shared_pref_calls.dart';
+import 'package:gradient_widgets/gradient_widgets.dart';
+import 'package:provider/provider.dart';
+
 
 /// [HomePage] entry point for home page's widgets
 class HomePage extends StatelessWidget {
@@ -12,9 +17,19 @@ class HomePage extends StatelessWidget {
   const HomePage({Key key, this.index}) : super(key: key);
   
   final int index;
+
+  Future<void> _onThemeChanged(bool value, ThemeNotifier themeNotifier) async {
+    value ? themeNotifier.setTheme(buildDarkTheme()) : themeNotifier.setTheme(buildLightTheme());
+    SharedPrefCalls().setIsDarkMode(value);
+  }
   
   @override
   Widget build(BuildContext context) {
+    final ThemeNotifier themeNotifier = Provider.of<ThemeNotifier>(context);
+    final bool isDarkMode = themeNotifier.isDarkMode();
+    final LinearGradient gradient = Theme.of(context).brightness == Brightness.light 
+      ? Gradients.coldLinear : Gradients.haze;
+
     return BlocListener<HomeBloc, HomeState>(
       listener: (BuildContext context, HomeState state) {
         if (state is Failure) {
@@ -22,10 +37,38 @@ class HomePage extends StatelessWidget {
             .add(ThrowError(icon: Icons.error, title: 'An error occured', message: state.error));
         }
       },
-      child: Center(
-        child: Container(
-          child: Text('$index', style: CustomFontStyle.headerTextStyle.copyWith(color: Colors.black),),
-        ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: <Widget>[
+          Container(
+            child: Text('$index', style: CustomFontStyle.headerTextStyle.copyWith(color: Colors.black),),
+          ),
+          GradientButton(
+            child: Theme.of(context).brightness == Brightness.light 
+              ? const Text('Dark Theme') : const Text('Light Theme'),
+            callback: () => _onThemeChanged(!isDarkMode, themeNotifier),
+            gradient: gradient,
+            shadowColor: gradient.colors.last.withOpacity(0.5),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(6.0)
+            ),
+            elevation: 0.0,
+            increaseHeightBy: MediaQuery.of(context).size.height*0.012,
+            increaseWidthBy: MediaQuery.of(context).size.width*0.4,
+          ),
+          GradientButton(
+            child: const Text('Disconnect'),
+            callback: () {}, // TODO(axelc) : add callback
+            gradient: Gradients.cosmicFusion,
+            shadowColor: Gradients.cosmicFusion.colors.last.withOpacity(0.5),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(6.0)
+            ),
+            elevation: 0.0,
+            increaseHeightBy: MediaQuery.of(context).size.height*0.012,
+            increaseWidthBy: MediaQuery.of(context).size.width*0.4,
+          ),
+        ],
       ),
     );
   }
