@@ -2,9 +2,9 @@
 A flutter application's boilerplate with firebase authentication.
 
 The work here is still in progress (todo list below):
-[] Add a button for the theming changes and show how it works
-[] Add a disconnection button 
-[] Add some pictures of the app on the README.md
+* [] Add a button for the theming changes and show how it works
+* [] Add a disconnection button 
+* [] Add some pictures of the app on the README.md
 
 ## Quick overview
 This repository has been made for anyone who would like to start creating a new application that uses firebase and that already has an authentication system.
