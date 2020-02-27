@@ -11,6 +11,16 @@ The work here is still in progress (todo list below):
 This repository has been made for anyone who would like to start creating a new application that uses firebase and that already has an authentication system.
 The boilerplate application uses the [flutter-bloc](https://bloclibrary.dev/#/) implementation and is highly customisable. OTher things were added in this project like the theme handling for example. 
 
+## Preview
+Here is some pictures of the initial application you will get once it is configured.
+
+![Welcome Page](https://github.com/acoudray1/flutter-firebase-login-boilerplate/blob/master/github_assets/welcome_page.png){:height="50%" width="50%"}
+![Login Page](https://github.com/acoudray1/flutter-firebase-login-boilerplate/blob/master/github_assets/login_page.png){:height="50%" width="50%"}
+![Signup Page](https://github.com/acoudray1/flutter-firebase-login-boilerplate/blob/master/github_assets/signup_page.png){:height="50%" width="50%"}
+![Home Page Dark Mode](https://github.com/acoudray1/flutter-firebase-login-boilerplate/blob/master/github_assets/home_page_dark.png){:height="50%" width="50%"}
+![Home Page Light Mode](https://github.com/acoudray1/flutter-firebase-login-boilerplate/blob/master/github_assets/home_page_light.png){:height="50%" width="50%"}
+
+
 ## Architecture
 The application file tree is like the following :
 ```
