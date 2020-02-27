@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_firebase_login_boilerplate/blocs/application/application_bloc.dart';
+import 'package:flutter_firebase_login_boilerplate/blocs/application/application_events.dart';
 import 'package:flutter_firebase_login_boilerplate/blocs/application/root_bloc.dart';
 import 'package:flutter_firebase_login_boilerplate/blocs/application/root_events.dart';
 import 'package:flutter_firebase_login_boilerplate/blocs/home/home_bloc.dart';
@@ -27,8 +29,13 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final ThemeNotifier themeNotifier = Provider.of<ThemeNotifier>(context);
     final bool isDarkMode = themeNotifier.isDarkMode();
-    final LinearGradient gradient = Theme.of(context).brightness == Brightness.light 
-      ? Gradients.coldLinear : Gradients.haze;
+    String themeText = 'Dark Theme';
+    LinearGradient gradient = Gradients.byDesign;
+    
+    if (isDarkMode) {
+      themeText = 'Light Theme';
+      gradient = Gradients.rainbowBlue;
+    }
 
     return BlocListener<HomeBloc, HomeState>(
       listener: (BuildContext context, HomeState state) {
@@ -44,8 +51,7 @@ class HomePage extends StatelessWidget {
             child: Text('$index', style: CustomFontStyle.headerTextStyle.copyWith(color: Colors.black),),
           ),
           GradientButton(
-            child: Theme.of(context).brightness == Brightness.light 
-              ? const Text('Dark Theme') : const Text('Light Theme'),
+            child: Text(themeText),
             callback: () => _onThemeChanged(!isDarkMode, themeNotifier),
             gradient: gradient,
             shadowColor: gradient.colors.last.withOpacity(0.5),
@@ -58,7 +64,9 @@ class HomePage extends StatelessWidget {
           ),
           GradientButton(
             child: const Text('Disconnect'),
-            callback: () {}, // TODO(axelc) : add callback
+            callback: () {
+              BlocProvider.of<ApplicationBloc>(context).add(LoggedOut());
+            },
             gradient: Gradients.cosmicFusion,
             shadowColor: Gradients.cosmicFusion.colors.last.withOpacity(0.5),
             shape: RoundedRectangleBorder(

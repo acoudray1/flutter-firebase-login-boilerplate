@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/cupertino.dart';
 
 import 'package:bloc/bloc.dart';
@@ -8,13 +6,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_firebase_login_boilerplate/blocs/application/application_bloc.dart';
 import 'package:flutter_firebase_login_boilerplate/blocs/application/application_events.dart';
-import 'package:flutter_firebase_login_boilerplate/blocs/application/application_states.dart';
 import 'package:flutter_firebase_login_boilerplate/blocs/application/root_bloc.dart';
 import 'package:flutter_firebase_login_boilerplate/configuration/theme/theme_notifier.dart';
 import 'package:flutter_firebase_login_boilerplate/providers/repositories/shared_pref_calls.dart';
-import 'package:flutter_firebase_login_boilerplate/screens/authentication/authentication.dart';
-import 'package:flutter_firebase_login_boilerplate/screens/components/information/splash_screen.dart';
-import 'package:flutter_firebase_login_boilerplate/screens/components/information/waiting_screen.dart';
 import 'package:flutter_firebase_login_boilerplate/screens/components/restart_widget.dart';
 import 'package:flutter_firebase_login_boilerplate/screens/root.dart';
 import 'package:provider/provider.dart';
@@ -81,25 +75,13 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  Timer timer;
 
   @override
   Widget build(BuildContext context) {
     final ThemeNotifier themeNotifier = Provider.of<ThemeNotifier>(context);
     return MaterialApp(
-      title: 'flutter-firebase-login-boilerplate',
-      home: BlocBuilder<ApplicationBloc, ApplicationState>(
-        builder: (BuildContext context, ApplicationState state) {
-          if (state is UserAuthenticated) {
-            return const Root();
-          } else if (state is UserUnauthenticated) {
-            return Authentication();
-          } else if (state is Loading) {
-            return WaitingScreen();
-          }
-          return SplashScreen();
-        },
-      ),
+      title: 'flutter_firebase_login_boilerplate',
+      home: const Root(),
       theme: themeNotifier.getTheme(),
     );
   }
