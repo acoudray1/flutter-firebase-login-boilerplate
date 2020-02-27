@@ -1,9 +1,13 @@
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_firebase_login_boilerplate/blocs/application/application_bloc.dart';
+import 'package:flutter_firebase_login_boilerplate/blocs/application/application_states.dart';
 import 'package:flutter_firebase_login_boilerplate/blocs/application/root_bloc.dart';
 import 'package:flutter_firebase_login_boilerplate/blocs/application/root_states.dart';
 import 'package:flutter_firebase_login_boilerplate/configuration/theme/custom_font_style.dart';
+import 'package:flutter_firebase_login_boilerplate/screens/authentication/authentication.dart';
+import 'package:flutter_firebase_login_boilerplate/screens/components/information/splash_screen.dart';
 import 'package:flutter_firebase_login_boilerplate/screens/components/information/waiting_screen.dart';
 import 'package:flutter_firebase_login_boilerplate/screens/home/home.dart';
 
@@ -50,37 +54,48 @@ class _RootState extends State<Root> {
           );
         }
       },
-      child: Scaffold(
-        body: _buildPage(_currentIndex),
-        bottomNavigationBar: BottomNavigationBar(
-          elevation: 5.0,
-          selectedFontSize: 12.0,
-          type: BottomNavigationBarType.fixed,
-          currentIndex: _currentIndex,
-          onTap: _onTabTapped,
-          items: <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home, color: _bottomButtonColor.withOpacity(0.5)),
-              activeIcon: Icon(Icons.home, color: _bottomButtonColor),
-              title: Text('Test', style: CustomFontStyle.commonTextStyle.copyWith(color: Colors.black),),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.group, color: _bottomButtonColor.withOpacity(0.5)),
-              activeIcon: Icon(Icons.group, color: _bottomButtonColor),
-              title: Text('Test', style: CustomFontStyle.commonTextStyle.copyWith(color: Colors.black),),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.notifications, color: _bottomButtonColor.withOpacity(0.5)),
-              activeIcon: Icon(Icons.notifications, color: _bottomButtonColor),
-              title: Text('Test', style: CustomFontStyle.commonTextStyle.copyWith(color: Colors.black),),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.message, color: _bottomButtonColor.withOpacity(0.5)),
-              activeIcon: Icon(Icons.message, color: _bottomButtonColor),
-              title: Text('Test', style: CustomFontStyle.commonTextStyle.copyWith(color: Colors.black),),
-            )
-          ],
-        ),
+      child: BlocBuilder<ApplicationBloc, ApplicationState>(
+        builder: (BuildContext context, ApplicationState state) {
+          if (state is UserAuthenticated) {
+            return Scaffold(
+              body: _buildPage(_currentIndex),
+              bottomNavigationBar: BottomNavigationBar(
+                elevation: 5.0,
+                selectedFontSize: 12.0,
+                type: BottomNavigationBarType.fixed,
+                currentIndex: _currentIndex,
+                onTap: _onTabTapped,
+                items: <BottomNavigationBarItem>[
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.home, color: _bottomButtonColor.withOpacity(0.5)),
+                    activeIcon: Icon(Icons.home, color: _bottomButtonColor),
+                    title: Text('Test', style: CustomFontStyle.commonTextStyle.copyWith(color: Colors.black),),
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.group, color: _bottomButtonColor.withOpacity(0.5)),
+                    activeIcon: Icon(Icons.group, color: _bottomButtonColor),
+                    title: Text('Test', style: CustomFontStyle.commonTextStyle.copyWith(color: Colors.black),),
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.notifications, color: _bottomButtonColor.withOpacity(0.5)),
+                    activeIcon: Icon(Icons.notifications, color: _bottomButtonColor),
+                    title: Text('Test', style: CustomFontStyle.commonTextStyle.copyWith(color: Colors.black),),
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.message, color: _bottomButtonColor.withOpacity(0.5)),
+                    activeIcon: Icon(Icons.message, color: _bottomButtonColor),
+                    title: Text('Test', style: CustomFontStyle.commonTextStyle.copyWith(color: Colors.black),),
+                  )
+                ],
+              ),
+            );
+          } else if (state is UserUnauthenticated) {
+            return Authentication();
+          } else if (state is Loading) {
+            return WaitingScreen();
+          }
+          return SplashScreen();
+        },
       ),
     );
   }
