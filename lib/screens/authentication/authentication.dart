@@ -16,7 +16,7 @@ class Authentication extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocProvider<AuthenticationBloc>(
-        create: (BuildContext context) => userMustVerifyEmail 
+        create: (BuildContext context) => !userMustVerifyEmail 
           ? AuthenticationBloc(applicationBloc: BlocProvider.of<ApplicationBloc>(context))
           : AuthenticationBloc(applicationBloc: BlocProvider.of<ApplicationBloc>(context))..add(EmailVerifiedButtonPressed()),
         child: WelcomePage(),

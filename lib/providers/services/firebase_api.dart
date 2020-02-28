@@ -51,21 +51,22 @@ class FirebaseAPI implements AbstractFirebaseAPI {
   @override
   Future<void> sendEmailVerification() async {
     final FirebaseUser user = await _firebaseAuth.currentUser();
-    await user.reload();
     user.sendEmailVerification();
   }
   
   /// [signOut] signs out the user
   @override
   Future<void> signOut() async {
-    return _firebaseAuth.signOut();
+    await _firebaseAuth.signOut();
   }
 
   /// [isEmailVerified] verifies that the user's mail is valid
   @override
   Future<bool> isEmailVerified() async {
     final FirebaseUser user = await _firebaseAuth.currentUser();
-    print(user);
+    if (user is FirebaseUser) {
+      await user.reload();
+    }
     return user.isEmailVerified;
   }
 
