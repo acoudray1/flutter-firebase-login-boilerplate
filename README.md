@@ -14,12 +14,29 @@ The boilerplate application uses the [flutter-bloc](https://bloclibrary.dev/#/) 
 ## Preview
 Here is some pictures of the initial application you will get once it is configured.
 
-![Welcome Page](https://github.com/acoudray1/flutter-firebase-login-boilerplate/blob/master/github_assets/welcome_page.png){:height="50%" width="50%"}
-![Login Page](https://github.com/acoudray1/flutter-firebase-login-boilerplate/blob/master/github_assets/login_page.png){:height="50%" width="50%"}
-![Signup Page](https://github.com/acoudray1/flutter-firebase-login-boilerplate/blob/master/github_assets/signup_page.png){:height="50%" width="50%"}
-![Home Page Dark Mode](https://github.com/acoudray1/flutter-firebase-login-boilerplate/blob/master/github_assets/home_page_dark.png){:height="50%" width="50%"}
-![Home Page Light Mode](https://github.com/acoudray1/flutter-firebase-login-boilerplate/blob/master/github_assets/home_page_light.png){:height="50%" width="50%"}
-
+<div style="text-align: center"><table>
+<tr>
+  <td style="text-align: center">
+    <img src="https://github.com/acoudray1/flutter-firebase-login-boilerplate/blob/master/github_assets/welcome_page.png" height="33%" width="33%">
+  </td>
+  <td style="text-align: center">
+    <img src="https://github.com/acoudray1/flutter-firebase-login-boilerplate/blob/master/github_assets/login_page.png" height="33%" width="33%">
+  </td>
+  <td style="text-align: center">
+    <img src="https://github.com/acoudray1/flutter-firebase-login-boilerplate/blob/master/github_assets/signup_page.png" height="33%" width="33%">
+  </td>
+</tr>
+<tr>
+  <td style="text-align: center">
+    <img src="https://github.com/acoudray1/flutter-firebase-login-boilerplate/blob/master/github_assets/home_page_dark.png" height="33%" width="33%">
+  </td>
+  <td style="text-align: center">
+  </td>
+  <td style="text-align: center">
+    <img src="https://github.com/acoudray1/flutter-firebase-login-boilerplate/blob/master/github_assets/home_page_light.png" height="33%" width="33%">
+  </td>
+</tr>
+</table></div>
 
 ## Architecture
 The application file tree is like the following :
