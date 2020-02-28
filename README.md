@@ -6,6 +6,7 @@ The work here is still in progress (todo list below):
 * [x] Add a disconnection button 
 * [ ] Add a forgot password screen and handle it
 * [x] Add some pictures of the app on the README.md
+* [x] Add email verification handling
 
 ## Quick overview
 This repository has been made for anyone who would like to start creating a new application that uses firebase and that already has an authentication system.
