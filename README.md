@@ -18,23 +18,23 @@ Here is some pictures of the initial application you will get once it is configu
 <div style="text-align: center"><table>
 <tr>
   <td style="text-align: center">
-    <img src="https://github.com/acoudray1/flutter-firebase-login-boilerplate/blob/master/github_assets/welcome_page.png" height="auto" width="50%" align="middle">
+    <img src="https://github.com/acoudray1/flutter-firebase-login-boilerplate/blob/master/github_assets/welcome_page.png" height="auto" width="100%" align="middle">
   </td>
   <td style="text-align: center">
-    <img src="https://github.com/acoudray1/flutter-firebase-login-boilerplate/blob/master/github_assets/login_page.png" height="auto" width="50%" align="middle">
+    <img src="https://github.com/acoudray1/flutter-firebase-login-boilerplate/blob/master/github_assets/login_page.png" height="auto" width="100%" align="middle">
   </td>
   <td style="text-align: center">
-    <img src="https://github.com/acoudray1/flutter-firebase-login-boilerplate/blob/master/github_assets/signup_page.png" height="auto" width="50%" align="middle">
+    <img src="https://github.com/acoudray1/flutter-firebase-login-boilerplate/blob/master/github_assets/signup_page.png" height="auto" width="100%" align="middle">
   </td>
 </tr>
 <tr>
   <td style="text-align: center">
-    <img src="https://github.com/acoudray1/flutter-firebase-login-boilerplate/blob/master/github_assets/home_page_dark.png" height="auto" width="50%" align="middle">
+    <img src="https://github.com/acoudray1/flutter-firebase-login-boilerplate/blob/master/github_assets/home_page_dark.png" height="auto" width="100%" align="middle">
   </td>
   <td style="text-align: center">
   </td>
   <td style="text-align: center">
-    <img src="https://github.com/acoudray1/flutter-firebase-login-boilerplate/blob/master/github_assets/home_page_light.png" height="auto" width="50%" align="middle">
+    <img src="https://github.com/acoudray1/flutter-firebase-login-boilerplate/blob/master/github_assets/home_page_light.png" height="auto" width="100%" align="middle">
   </td>
 </tr>
 </table></div>
