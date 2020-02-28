@@ -13,7 +13,17 @@ class ApplicationUninitialized extends ApplicationState {}
 class UserAuthenticated extends ApplicationState {}
 
 /// State : User has no sessionID
-class UserUnauthenticated extends ApplicationState {}
+class UserUnauthenticated extends ApplicationState {
+  UserUnauthenticated({this.userMustVerifyEmail});
+
+  final bool userMustVerifyEmail;
+
+  @override
+  List<Object> get props => <Object>[userMustVerifyEmail];
+
+  @override
+  String toString() => 'UserUnauthenticated { userMustVerifyEmail: $userMustVerifyEmail }';
+}
 
 /// State : Checking if the sessionID is correct
 class Loading extends ApplicationState {}
@@ -28,5 +38,5 @@ class Failure extends ApplicationState {
   List<Object> get props => <Object>[error];
 
   @override
-  String toString() => 'Failure { error: ${error ?? ''} }';
+  String toString() => 'Failure { error: $error }';
 }

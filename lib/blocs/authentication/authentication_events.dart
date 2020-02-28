@@ -69,5 +69,11 @@ class ResetPasswordButtonPressed extends AuthenticationEvent {}
 /// Event : The user wants to rest its password
 class GoToResetPassword extends AuthenticationEvent {}
 
+/// Event : The email verified button is pressed
+class EmailVerifiedButtonPressed extends AuthenticationEvent {}
+
+/// Event : Send a new email to the user
+class SendEmailVerificationButtonPressed extends AuthenticationEvent {}
+
 /// Event : The login or signup view is closed without auth
 class ViewBack extends AuthenticationEvent {}

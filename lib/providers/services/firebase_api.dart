@@ -51,6 +51,7 @@ class FirebaseAPI implements AbstractFirebaseAPI {
   @override
   Future<void> sendEmailVerification() async {
     final FirebaseUser user = await _firebaseAuth.currentUser();
+    await user.reload();
     user.sendEmailVerification();
   }
   
@@ -64,6 +65,13 @@ class FirebaseAPI implements AbstractFirebaseAPI {
   @override
   Future<bool> isEmailVerified() async {
     final FirebaseUser user = await _firebaseAuth.currentUser();
+    print(user);
     return user.isEmailVerified;
+  }
+
+  /// [forgotPassword] sends an email to the user to change its password
+  @override
+  Future<void> forgotPassword(String email) async {
+
   }
 }

@@ -32,15 +32,38 @@ class UserRepository {
   /// [connectUser] handles the signin method
   Future<dynamic> connectUser(String email, String password) async {
     final dynamic signinResult = await firebaseAPI.signIn(email, password);
+    dynamic ret;
 
-    return signinResult;
+    if (signinResult is FirebaseUser && signinResult.isEmailVerified) {
+      ret = signinResult;
+    } else if (signinResult is FirebaseUser && !signinResult.isEmailVerified) {
+      sendEmailVerification();
+    } else {
+      ret = signinResult;
+    }
+
+    return ret;
   }
 
   /// [registerUser] handles the signup method
   Future<dynamic> registerUser(String email, String password) async {
     final dynamic signupResult = await firebaseAPI.signUp(email, password);
 
-    return signupResult;
+    if (signupResult is FirebaseUser) {
+      sendEmailVerification();
+    } else {
+      return signupResult;
+    }
+  }
+
+  /// [userVerified] checks if the user verified its email
+  Future<bool> userVerified() async {
+    return await firebaseAPI.isEmailVerified();
+  }
+
+  /// [sendEmailVerification] sens an email to the user to verify its account
+  Future<void> sendEmailVerification() async {
+    firebaseAPI.sendEmailVerification();
   }
 
   /// [disconnectUser] signs out the user from the app

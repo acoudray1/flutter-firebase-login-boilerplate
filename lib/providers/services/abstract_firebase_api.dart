@@ -23,4 +23,7 @@ abstract class AbstractFirebaseAPI {
 
   /// [isEmailVerified] verifies that the user's mail is valid
   Future<bool> isEmailVerified();
+
+  /// [forgotPassword] sends an email to reset password
+  Future<void> forgotPassword(String email);
 }

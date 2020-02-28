@@ -4,6 +4,7 @@ import 'package:flutter_firebase_login_boilerplate/blocs/application/root_bloc.d
 import 'package:flutter_firebase_login_boilerplate/blocs/application/root_events.dart';
 import 'package:flutter_firebase_login_boilerplate/blocs/authentication/authentication_bloc.dart';
 import 'package:flutter_firebase_login_boilerplate/blocs/authentication/authentication_states.dart';
+import 'package:flutter_firebase_login_boilerplate/screens/authentication/components/email_verification_page.dart';
 import 'package:flutter_firebase_login_boilerplate/screens/authentication/components/forgot_password_page.dart';
 import 'package:flutter_firebase_login_boilerplate/screens/authentication/components/login_button.dart';
 import 'package:flutter_firebase_login_boilerplate/screens/authentication/components/login_page.dart';
@@ -53,6 +54,8 @@ class WelcomePage extends StatelessWidget {
             return LoginPage(fromSignupPage: state.fromSignupPage,);
           } else if (state is Signup) {
             return SignupPage(fromLoginPage: state.fromLoginPage,);
+          } else if (state is EmailNotVerified) {
+            return EmailVerificationPage();
           } else if (state is ResetPassword) {
             return ForgotPasswordPage();
           } else {

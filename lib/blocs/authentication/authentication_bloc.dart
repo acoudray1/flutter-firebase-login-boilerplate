@@ -25,16 +25,18 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
     }
 
     /// Login the user in firebase, if [FirebaseUser] adds [ApplicationBloc.LoggedIn] and sends state 
-    /// back to [Initial]. Else sends [Failure] and [Login].
+    /// back to [Initial]. Else if result is error.String sends [Failure] and [Login]. Else sends [EmailNotVerified].
     if (event is LoginButtonPressed) {
       final dynamic result = await userRepository.connectUser(event.email, event.password);
 
       if (result is FirebaseUser) {
         applicationBloc.add(LoggedIn());
         yield Initial();
-      } else {
+      } else if (result is String) {
         yield Failure(error: result);
         yield Login();
+      } else {
+        yield EmailNotVerified();
       }
     }
 
@@ -43,18 +45,36 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
       yield Signup(fromLoginPage: event.fromLoginPage);
     }
 
-    /// Register the user in firebase, if [FirebaseUser] adds [ApplicationBloc.LoggedIn] and sends state 
-    /// back to [Initial]. Else sends [Failure] and [Signup].
+    /// Register the user in firebase and send email verification, if result is an error.String sends [Failure] and [Signup],
+    /// else sends [EmailNotVerified].
     if (event is SignupButtonPressed) {
       final dynamic result = await userRepository.registerUser(event.email, event.password);
 
-      if (result is FirebaseUser) {
+      if (result is String) {
+        yield Failure(error: result);
+        yield Signup();
+      } else {
+        yield EmailNotVerified();
+      }
+    }
+
+    /// If the email is not verified sends [Failure] and [EmailNotVerified], else sends [ApplicationBloc.LoggedIn]
+    /// and [Initial].
+    if (event is EmailVerifiedButtonPressed) {
+      final bool isEmailVerified = await userRepository.userVerified();
+
+      if (isEmailVerified) {
         applicationBloc.add(LoggedIn());
         yield Initial();
       } else {
-        yield Failure(error: result);
-        yield Signup();
+        yield Failure(error: 'Your email is not verified');
+        yield EmailNotVerified();
       }
+    }
+
+    /// Send a new email verification to the user
+    if (event is SendEmailVerificationButtonPressed) {
+      userRepository.sendEmailVerification();
     }
 
     /// Sends to [ResetPassword] state

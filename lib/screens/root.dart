@@ -90,7 +90,7 @@ class _RootState extends State<Root> {
               ),
             );
           } else if (state is UserUnauthenticated) {
-            return Authentication();
+            return Authentication(userMustVerifyEmail: state.userMustVerifyEmail,);
           } else if (state is Loading) {
             return WaitingScreen();
           }

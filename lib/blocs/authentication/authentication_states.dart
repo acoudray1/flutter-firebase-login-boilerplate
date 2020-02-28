@@ -38,6 +38,9 @@ class Signup extends AuthenticationState {
 /// State : The user wants to reset its password
 class ResetPassword extends AuthenticationState {}
 
+/// State : The user must verify its email
+class EmailNotVerified extends AuthenticationState {} 
+
 /// State : An error has been thrown during loading
 class Failure extends AuthenticationState {
   Failure({this.error = 'Something went wrong'});

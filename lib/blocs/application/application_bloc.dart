@@ -12,24 +12,32 @@ class ApplicationBloc extends Bloc<ApplicationEvent, ApplicationState> {
 
   @override
   Stream<ApplicationState> mapEventToState(ApplicationEvent event) async* {
-    /// Checks if a user is already logged in and then sends to [LoginBloc.UserUnauthenticated] state,
-    /// if not it adds [LoggedIn]
+    /// Checks if a user is already logged in and if its email is verified, then sends to [LoggedIn] 
+    /// state, if not it adds [UserUnauthenticated].
     if (event is AppStarted) {
       yield UserUnauthenticated();
-      if (await userRepository.checkUserState()) {
+      final bool isUserVerified = await userRepository.userVerified();
+      final bool userExists = await userRepository.checkUserState();
+
+      if (userExists && isUserVerified) {
         add(LoggedIn());
+      } else if (userExists && !isUserVerified) {
+        yield UserUnauthenticated(userMustVerifyEmail: true);
+      } else {
+        yield UserUnauthenticated(userMustVerifyEmail: false);
       }
     }
 
     /// Sends to [UserAuthenticated] state
     if (event is LoggedIn) {
+      // TODO(axelc): Add a get user here
       yield UserAuthenticated();
     }
 
     /// Sends to [LoginBloc.UserUnauthenticated] state and disconnects the user from the app.
     /// Adds [AppStarted] to restart using it
     if (event is LoggedOut) {
-      yield UserUnauthenticated();
+      yield UserUnauthenticated(userMustVerifyEmail: false);
       await userRepository.disconnectUser();
       add(AppStarted());
     }
