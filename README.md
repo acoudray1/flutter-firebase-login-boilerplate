@@ -78,14 +78,15 @@ The application file tree is like the following :
 1. Clone the repository `git clone https://github.com/acoudray1/flutter-firebase-login-boilerplate.git`
 2. Change the application id in the different files : `com.axelc.flutter-firebase-login-boilerplate` by your own application id.
 3. Change the application name `name: flutter_firebase_login_boilerplate` in the `pubspec.yaml` file
-4. Run `flutter packages get` in the root directory
-5. Create a new firebase project on the [firebase console](https://console.firebase.google.com/)
-6. Add a new application (IOS or Android) to your firebase project :
+4. Change import packages name `package:flutter_firebase_login_boilerplate` with `package:<application_name>`
+5. Run `flutter packages get` in the root directory
+6. Create a new firebase project on the [firebase console](https://console.firebase.google.com/)
+7. Add a new application (IOS or Android) to your firebase project :
       * choose the application id you entered before
       * get the `google-services.json` / `GoogleService-Info.plist` and add it in the good directory
             (-> on android : `android/app/` (then sync gradle))
             (-> on IOS : `ios/Runner/` (don't forget to use XCode to do that))
-7. Run the application, everything should work fine
+8. Run the application, everything should work fine
 
 P.S. : If there is any bug or if you encounter any problem you can contact me [here](mailto: axelcoudray1@gmail.com).
       
