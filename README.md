@@ -4,7 +4,7 @@ A flutter application's boilerplate with firebase authentication.
 The work here is still in progress (todo list below):
 * [x] Add a button for the theming changes and show how it works
 * [x] Add a disconnection button 
-* [ ] Add a forgot password screen and handle it
+* [x] Add a forgot password screen and handle it
 * [x] Add some pictures of the app on the README.md
 * [x] Add email verification handling
 
