@@ -41,16 +41,22 @@ class _RootState extends State<Root> {
             message: state.message,
             icon: state.icon
           );
-        } else if (state is InformationDisplay) {
-          _throwInformation(context,
+        } else if (state is DialogInformationDisplay) {
+          _throwInformationDialog(context,
             title: state.title,
             widgets: state.widgets
           );
-        } else if (state is AlertDisplay) {
-          _throwAlert(context,
+        } else if (state is DialogAlertDisplay) {
+          _throwAlertDialog(context,
             title: state.title,
             content: state.content,
             actions: state.actions
+          );
+        } else if (state is InformationDisplay) {
+          _throwInformation(context,
+            title: state.title,
+            message: state.message,
+            icon: state.icon
           );
         }
       },
@@ -126,13 +132,13 @@ class _RootState extends State<Root> {
     return widgetToBuild;
   }
 
-  /// [_throwAlert] displays an alert dialog
+  /// [_throwAlertDialog] displays an alert dialog
   ///
   /// @param BuildContext : the current context
   /// @param String title : the title to display
   /// @param String content : the content to display
   /// @param List<Widget> actions : the content to display after the title and the content
-  void _throwAlert(BuildContext context, {String title, String content, List<Widget> actions}) {
+  void _throwAlertDialog(BuildContext context, {String title, String content, List<Widget> actions}) {
     showDialog<AlertDialog>(
       context: context,
       builder: (BuildContext ctx) {
@@ -156,12 +162,12 @@ class _RootState extends State<Root> {
     );
   }
 
-  /// [_throwInformation] displays a simple dialog with some informations
+  /// [_throwInformationDialog] displays a simple dialog with some informations
   /// 
   /// @param BuildContext : the current context
   /// @param String title : the title to display
   /// @param List<Widget> widgets : the content to display after the title
-  void _throwInformation(BuildContext context, {String title, List<Widget> widgets}) {
+  void _throwInformationDialog(BuildContext context, {String title, List<Widget> widgets}) {
     showDialog<SimpleDialog>(
       context: context,
       builder: (BuildContext ctx) {
@@ -190,7 +196,29 @@ class _RootState extends State<Root> {
     Flushbar<Object>(
       title: title,
       message: message,
-      backgroundColor: Theme.of(context).secondaryHeaderColor,
+      backgroundColor: Theme.of(context).errorColor,
+      icon: Icon(icon,
+        size: 28,
+        color: Theme.of(context).accentColor,
+      ),
+      duration: const Duration(seconds: 3),
+      flushbarStyle: FlushbarStyle.FLOATING,
+      margin: EdgeInsets.all(MediaQuery.of(context).size.height * 0.005),
+      borderRadius: MediaQuery.of(context).size.height * 0.005,
+    )..show(context);
+  }
+
+  /// [_throwInformation] displays a snackbar at the bottom of the application in order to inform the user of something
+  /// 
+  /// @param BuildContext context
+  /// @param String title
+  /// @param String message
+  /// @param IconData icon
+  void _throwInformation(BuildContext context, {String title, String message, IconData icon}) {
+    Flushbar<Object>(
+      title: title,
+      message: message,
+      backgroundColor: Theme.of(context).primaryColor,
       icon: Icon(icon,
         size: 28,
         color: Theme.of(context).accentColor,

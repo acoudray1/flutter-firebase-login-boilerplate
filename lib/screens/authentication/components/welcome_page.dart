@@ -23,6 +23,10 @@ class WelcomePage extends StatelessWidget {
           BlocProvider.of<RootBloc>(context)
             .add(ThrowError(icon: Icons.error, title: 'An error occured', message: state.error));
         }
+        if (state is ResetPasswordEmailSent) {
+          BlocProvider.of<RootBloc>(context)
+            .add(ThrowInformation(icon: Icons.notifications_active, title: 'Email sent', message: 'The reset email has been sent'));
+        }
       },
       child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
         builder: (BuildContext context, AuthenticationState state) {

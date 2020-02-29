@@ -10,8 +10,8 @@ abstract class RootEvent extends Equatable {
 }
 
 /// Event : display an alert dialog
-class ThrowAlert extends RootEvent {
-  const ThrowAlert({
+class ThrowAlertDialog extends RootEvent {
+  const ThrowAlertDialog({
     this.title,
     this.content,
     this.actions,
@@ -25,13 +25,13 @@ class ThrowAlert extends RootEvent {
   List<Object> get props => <Object>[title, content, actions];
 
   @override
-  String toString() => 'ThrowAlert { title: $title, content: $content, actions: $actions }';
+  String toString() => 'ThrowAlertDialog { title: $title, content: $content, actions: $actions }';
 }
 
 /// Event : display a simple informative dialog
-class ThrowInformation extends RootEvent {
+class ThrowInformationDialog extends RootEvent {
   
-  const ThrowInformation({
+  const ThrowInformationDialog({
     this.title,
     this.widgets,
   });
@@ -43,7 +43,7 @@ class ThrowInformation extends RootEvent {
   List<Object> get props => <Object>[title, widgets];
 
   @override
-  String toString() => 'ThrowInformation { title: $title, widgets: ${widgets.toList().toString()} }';
+  String toString() => 'ThrowInformationDialog { title: $title, widgets: ${widgets.toList().toString()} }';
 }
 
 /// Event : displays a snackbar to inform that something occured
@@ -64,4 +64,24 @@ class ThrowError extends RootEvent {
 
   @override
   String toString() => 'ThrowError { title: $title, message: $message, icon: $icon }';
+}
+
+/// State : displays a snackbar to inform the user 
+class ThrowInformation extends RootEvent {
+
+  const ThrowInformation({
+    this.title,
+    this.message,
+    this.icon,
+  });
+
+  final String title;
+  final String message;
+  final IconData icon;
+
+  @override
+  List<Object> get props => <Object>[title, message, icon];
+
+  @override
+  String toString() => 'ThrowInformation { title: $title, message: $message, icon: $icon }';
 }

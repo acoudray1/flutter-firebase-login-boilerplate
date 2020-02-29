@@ -11,8 +11,8 @@ abstract class RootState extends Equatable {
 class Stable extends RootState {}
 
 /// State : Displays an alert dialog
-class AlertDisplay extends RootState {
-  AlertDisplay({
+class DialogAlertDisplay extends RootState {
+  DialogAlertDisplay({
     this.title,
     this.content,
     this.actions,
@@ -26,13 +26,13 @@ class AlertDisplay extends RootState {
   List<Object> get props => <Object>[title, content, actions];
 
   @override
-  String toString() => 'AlertDisplay { title: $title, content: $content, actions: ${actions.toList().toString()} }';
+  String toString() => 'DialogAlertDisplay { title: $title, content: $content, actions: ${actions.toList().toString()} }';
 }
 
 /// State : Displays a simple dialog with informations
-class InformationDisplay extends RootState {
+class DialogInformationDisplay extends RootState {
 
-  InformationDisplay({
+  DialogInformationDisplay({
     this.title,
     this.widgets,
   });
@@ -44,10 +44,10 @@ class InformationDisplay extends RootState {
   List<Object> get props => <Object>[title, widgets];
 
   @override
-  String toString() => 'InformationDisplay { title: $title, widgets: ${widgets.toList().toString()} }';
+  String toString() => 'DialogInformationDisplay { title: $title, widgets: ${widgets.toList().toString()} }';
 }
 
-/// State : Displays a simple snackbar with informations
+/// State : Displays a simple snackbar with error informations
 class ErrorDisplay extends RootState {
 
   ErrorDisplay({
@@ -65,4 +65,23 @@ class ErrorDisplay extends RootState {
 
   @override
   String toString() => 'ErrorDisplay { title: $title, message: $message, icon: $icon }';
+}
+
+/// State : Displays a snackbar with informations
+class InformationDisplay extends RootState {
+  InformationDisplay({
+    this.title,
+    this.message,
+    this.icon,
+  });
+
+  final String title;
+  final String message;
+  final IconData icon;
+
+  @override
+  List<Object> get props => <Object>[title, message, icon];
+
+  @override
+  String toString() => 'InformationDisplay { title: $title, message: $message, icon: $icon }';
 }

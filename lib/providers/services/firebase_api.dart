@@ -73,6 +73,6 @@ class FirebaseAPI implements AbstractFirebaseAPI {
   /// [forgotPassword] sends an email to the user to change its password
   @override
   Future<void> forgotPassword(String email) async {
-
+    await _firebaseAuth.sendPasswordResetEmail(email: email);
   }
 }

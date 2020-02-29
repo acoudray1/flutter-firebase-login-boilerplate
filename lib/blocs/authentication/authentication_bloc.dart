@@ -82,6 +82,13 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
       yield ResetPassword();
     }
 
+    /// Sends an email to the user in order that he resets its password and then sends [ResetPasswordEmailSent] state
+    if (event is ResetPasswordButtonPressed) {
+      await userRepository.askForPasswordReset(event.email);
+      yield ResetPasswordEmailSent();
+      yield ResetPassword();
+    }
+
     /// Sends to [Initial] state
     if (event is ViewBack) {
       yield Initial();

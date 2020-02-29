@@ -61,9 +61,14 @@ class UserRepository {
     return await firebaseAPI.isEmailVerified();
   }
 
-  /// [sendEmailVerification] sens an email to the user to verify its account
+  /// [sendEmailVerification] sends an email to the user to verify its account
   Future<void> sendEmailVerification() async {
     firebaseAPI.sendEmailVerification();
+  }
+
+  /// [askForPasswordReset] sends an email to the user to reset its password
+  Future<void> askForPasswordReset(String email) async {
+    firebaseAPI.forgotPassword(email);
   }
 
   /// [disconnectUser] signs out the user from the app

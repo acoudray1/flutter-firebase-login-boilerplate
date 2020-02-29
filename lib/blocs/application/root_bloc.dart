@@ -9,17 +9,17 @@ class RootBloc extends Bloc<RootEvent, RootState> {
 
   @override
   Stream<RootState> mapEventToState(RootEvent event) async* {
-    /// Sends [AlertDisplay] state in order to display an alert dialog and then sends back to
+    /// Sends [DialogAlertDisplay] state in order to display an alert dialog and then sends back to
     /// [Stable] state
-    if (event is ThrowAlert) {
-      yield AlertDisplay(title: event.title, content: event.content, actions: event.actions);
+    if (event is ThrowAlertDialog) {
+      yield DialogAlertDisplay(title: event.title, content: event.content, actions: event.actions);
       yield Stable();
     }
 
-    /// Sends [InformationDisplay] state in order to display a simple dialog and then sends back to
+    /// Sends [DialogInformationDisplay] state in order to display a simple dialog and then sends back to
     /// [Stable] state
-    if (event is ThrowInformation) {
-      yield InformationDisplay(title: event.title, widgets: event.widgets);
+    if (event is ThrowInformationDialog) {
+      yield DialogInformationDisplay(title: event.title, widgets: event.widgets);
       yield Stable();
     }
 
@@ -27,6 +27,13 @@ class RootBloc extends Bloc<RootEvent, RootState> {
     /// [Stable] state
     if (event is ThrowError) {
       yield ErrorDisplay(title: event.title, message: event.message, icon: event.icon);
+      yield Stable();
+    }
+
+    /// Sends [InformationDisplay] state in order to display a snackbar and then sends back to
+    /// [Stable] state
+    if (event is ThrowInformation) {
+      yield InformationDisplay(title: event.title, message: event.message, icon: event.icon);
       yield Stable();
     }
   }
