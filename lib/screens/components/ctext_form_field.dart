@@ -45,7 +45,7 @@ class CTextFormField extends StatelessWidget {
         data: Theme.of(context).copyWith(splashColor: Colors.transparent),
         child: !isObscure ? TextFormField(
           autofocus: false,
-          style: CustomFontStyle.commonTextStyle.copyWith(color: Colors.grey),
+          style: CustomFontStyle.commonTextStyle.copyWith(color: Colors.black87),
           decoration: InputDecoration(
             filled: true,
             fillColor: Colors.black12.withOpacity(0.07),
@@ -66,7 +66,7 @@ class CTextFormField extends StatelessWidget {
           onSaved: onSaved,
         ) : TextFormField(
           autofocus: false,
-          style: CustomFontStyle.commonTextStyle.copyWith(color: Colors.grey),
+          style: CustomFontStyle.commonTextStyle.copyWith(color: Colors.black87),
           decoration: InputDecoration(
             filled: true,
             fillColor: Colors.black12.withOpacity(0.07),
