@@ -8,7 +8,6 @@ import 'package:flutter_firebase_login_boilerplate/blocs/home/home_bloc.dart';
 import 'package:flutter_firebase_login_boilerplate/blocs/home/home_states.dart';
 import 'package:flutter_firebase_login_boilerplate/configuration/theme/custom_font_style.dart';
 import 'package:flutter_firebase_login_boilerplate/configuration/theme/theme_notifier.dart';
-import 'package:flutter_firebase_login_boilerplate/providers/repositories/shared_pref_calls.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -19,20 +18,14 @@ class HomePage extends StatelessWidget {
   const HomePage({Key key, this.index}) : super(key: key);
   
   final int index;
-
-  Future<void> _onThemeChanged(bool value, ThemeNotifier themeNotifier) async {
-    value ? themeNotifier.setTheme(buildDarkTheme()) : themeNotifier.setTheme(buildLightTheme());
-    SharedPrefCalls().setIsDarkMode(value);
-  }
   
   @override
   Widget build(BuildContext context) {
-    final ThemeNotifier themeNotifier = Provider.of<ThemeNotifier>(context);
-    final bool isDarkMode = themeNotifier.isDarkMode();
+    final RootBloc rootBloc = BlocProvider.of<RootBloc>(context);
     String themeText = 'Dark Theme';
     LinearGradient gradient = Gradients.byDesign;
-    
-    if (isDarkMode) {
+
+    if (Provider.of<ThemeNotifier>(context).isDarkMode()) {
       themeText = 'Light Theme';
       gradient = Gradients.rainbowBlue;
     }
@@ -40,8 +33,7 @@ class HomePage extends StatelessWidget {
     return BlocListener<HomeBloc, HomeState>(
       listener: (BuildContext context, HomeState state) {
         if (state is Failure) {
-          BlocProvider.of<RootBloc>(context)
-            .add(ThrowError(icon: Icons.error, title: 'An error occured', message: state.error));
+          rootBloc.add(ThrowError(icon: Icons.error, title: 'An error occured', message: state.error));
         }
       },
       child: Column(
@@ -52,7 +44,7 @@ class HomePage extends StatelessWidget {
           ),
           GradientButton(
             child: Text(themeText),
-            callback: () => _onThemeChanged(!isDarkMode, themeNotifier),
+            callback: () => rootBloc.add(ChangeTheme()),
             gradient: gradient,
             shadowColor: gradient.colors.last.withOpacity(0.5),
             shape: RoundedRectangleBorder(

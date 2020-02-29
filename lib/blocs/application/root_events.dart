@@ -66,7 +66,7 @@ class ThrowError extends RootEvent {
   String toString() => 'ThrowError { title: $title, message: $message, icon: $icon }';
 }
 
-/// State : displays a snackbar to inform the user 
+/// Event : displays a snackbar to inform the user 
 class ThrowInformation extends RootEvent {
 
   const ThrowInformation({
@@ -85,3 +85,6 @@ class ThrowInformation extends RootEvent {
   @override
   String toString() => 'ThrowInformation { title: $title, message: $message, icon: $icon }';
 }
+
+/// Event : change the current theme
+class ChangeTheme extends RootEvent {}

@@ -85,3 +85,6 @@ class InformationDisplay extends RootState {
   @override
   String toString() => 'InformationDisplay { title: $title, message: $message, icon: $icon }';
 }
+
+/// State : Change the current theme
+class ThemeTrigger extends RootState {}

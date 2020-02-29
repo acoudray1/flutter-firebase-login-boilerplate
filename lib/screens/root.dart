@@ -6,10 +6,13 @@ import 'package:flutter_firebase_login_boilerplate/blocs/application/application
 import 'package:flutter_firebase_login_boilerplate/blocs/application/root_bloc.dart';
 import 'package:flutter_firebase_login_boilerplate/blocs/application/root_states.dart';
 import 'package:flutter_firebase_login_boilerplate/configuration/theme/custom_font_style.dart';
+import 'package:flutter_firebase_login_boilerplate/configuration/theme/theme_notifier.dart';
+import 'package:flutter_firebase_login_boilerplate/providers/repositories/shared_pref_calls.dart';
 import 'package:flutter_firebase_login_boilerplate/screens/authentication/authentication.dart';
 import 'package:flutter_firebase_login_boilerplate/screens/components/information/splash_screen.dart';
 import 'package:flutter_firebase_login_boilerplate/screens/components/information/waiting_screen.dart';
 import 'package:flutter_firebase_login_boilerplate/screens/home/home.dart';
+import 'package:provider/provider.dart';
 
 /// [Root] is the root page of Liyo app
 class Root extends StatefulWidget {
@@ -58,50 +61,59 @@ class _RootState extends State<Root> {
             message: state.message,
             icon: state.icon
           );
+        } else if (state is ThemeTrigger) {
+          _onThemeChanged(context);
         }
       },
-      child: BlocBuilder<ApplicationBloc, ApplicationState>(
-        builder: (BuildContext context, ApplicationState state) {
-          if (state is UserAuthenticated) {
-            return Scaffold(
-              body: _buildPage(_currentIndex),
-              bottomNavigationBar: BottomNavigationBar(
-                elevation: 5.0,
-                selectedFontSize: 12.0,
-                type: BottomNavigationBarType.fixed,
-                currentIndex: _currentIndex,
-                onTap: _onTabTapped,
-                items: <BottomNavigationBarItem>[
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.home, color: _bottomButtonColor.withOpacity(0.5)),
-                    activeIcon: Icon(Icons.home, color: _bottomButtonColor),
-                    title: Text('Test', style: CustomFontStyle.commonTextStyle.copyWith(color: Colors.black),),
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.group, color: _bottomButtonColor.withOpacity(0.5)),
-                    activeIcon: Icon(Icons.group, color: _bottomButtonColor),
-                    title: Text('Test', style: CustomFontStyle.commonTextStyle.copyWith(color: Colors.black),),
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.notifications, color: _bottomButtonColor.withOpacity(0.5)),
-                    activeIcon: Icon(Icons.notifications, color: _bottomButtonColor),
-                    title: Text('Test', style: CustomFontStyle.commonTextStyle.copyWith(color: Colors.black),),
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.message, color: _bottomButtonColor.withOpacity(0.5)),
-                    activeIcon: Icon(Icons.message, color: _bottomButtonColor),
-                    title: Text('Test', style: CustomFontStyle.commonTextStyle.copyWith(color: Colors.black),),
-                  )
-                ],
-              ),
-            );
-          } else if (state is UserUnauthenticated) {
-            return Authentication(userMustVerifyEmail: state.userMustVerifyEmail,);
-          } else if (state is Loading) {
-            return WaitingScreen();
+      child: BlocListener<ApplicationBloc, ApplicationState>(
+        listener: (BuildContext context, ApplicationState state) {
+          if (state is UserUnauthenticated) {
+            _setLightTheme(context);
           }
-          return SplashScreen();
         },
+        child: BlocBuilder<ApplicationBloc, ApplicationState>(
+          builder: (BuildContext context, ApplicationState state) {
+            if (state is UserAuthenticated) {
+              return Scaffold(
+                body: _buildPage(_currentIndex),
+                bottomNavigationBar: BottomNavigationBar(
+                  elevation: 5.0,
+                  selectedFontSize: 12.0,
+                  type: BottomNavigationBarType.fixed,
+                  currentIndex: _currentIndex,
+                  onTap: _onTabTapped,
+                  items: <BottomNavigationBarItem>[
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.home, color: _bottomButtonColor.withOpacity(0.5)),
+                      activeIcon: Icon(Icons.home, color: _bottomButtonColor),
+                      title: Text('Test', style: CustomFontStyle.commonTextStyle.copyWith(color: Colors.black),),
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.group, color: _bottomButtonColor.withOpacity(0.5)),
+                      activeIcon: Icon(Icons.group, color: _bottomButtonColor),
+                      title: Text('Test', style: CustomFontStyle.commonTextStyle.copyWith(color: Colors.black),),
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.notifications, color: _bottomButtonColor.withOpacity(0.5)),
+                      activeIcon: Icon(Icons.notifications, color: _bottomButtonColor),
+                      title: Text('Test', style: CustomFontStyle.commonTextStyle.copyWith(color: Colors.black),),
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.message, color: _bottomButtonColor.withOpacity(0.5)),
+                      activeIcon: Icon(Icons.message, color: _bottomButtonColor),
+                      title: Text('Test', style: CustomFontStyle.commonTextStyle.copyWith(color: Colors.black),),
+                    )
+                  ],
+                ),
+              );
+            } else if (state is UserUnauthenticated) {
+              return Authentication(userMustVerifyEmail: state.userMustVerifyEmail,);
+            } else if (state is Loading) {
+              return WaitingScreen();
+            }
+            return SplashScreen();
+          },
+        ),
       ),
     );
   }
@@ -184,6 +196,25 @@ class _RootState extends State<Root> {
         );
       }
     );
+  }
+
+  /// [_onThemeChanged] changes the theme of the application
+  /// 
+  /// @param BuildContext : the current context
+  void _onThemeChanged(BuildContext context) {
+    final ThemeNotifier themeNotifier = Provider.of<ThemeNotifier>(context);
+    final bool isDarkMode = themeNotifier.isDarkMode();
+    isDarkMode ? themeNotifier.setTheme(buildLightTheme()) : themeNotifier.setTheme(buildDarkTheme());
+    SharedPrefCalls().setIsDarkMode(!isDarkMode);
+  }
+
+  /// [_setLightTheme] sets the theme to light, used on user's logout
+  /// 
+  /// @param BuildContext : the current context 
+  void _setLightTheme(BuildContext context) {
+    final ThemeNotifier themeNotifier = Provider.of<ThemeNotifier>(context);
+    themeNotifier.setTheme(buildLightTheme());
+    SharedPrefCalls().setIsDarkMode(false);
   }
 
   /// [_throwError] displays a snackbar at the bottom of the application in order to inform the user of an error

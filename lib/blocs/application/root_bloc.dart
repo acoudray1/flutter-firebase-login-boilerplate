@@ -36,5 +36,12 @@ class RootBloc extends Bloc<RootEvent, RootState> {
       yield InformationDisplay(title: event.title, message: event.message, icon: event.icon);
       yield Stable();
     }
+
+    /// Sends [ThemeTrigger] state in order to change the current theme and then sends back to 
+    /// [Stable] state
+    if (event is ChangeTheme) {
+      yield ThemeTrigger();
+      yield Stable();
+    }
   }
 }
