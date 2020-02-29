@@ -3,7 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
 import 'package:flutter_firebase_login_boilerplate/blocs/authentication/authentication_bloc.dart';
 import 'package:flutter_firebase_login_boilerplate/blocs/authentication/authentication_events.dart';
+import 'package:flutter_firebase_login_boilerplate/configuration/properties/properties.dart';
 import 'package:flutter_firebase_login_boilerplate/configuration/theme/custom_font_style.dart';
+import 'package:flutter_firebase_login_boilerplate/screens/components/ctext_form_field.dart';
 
 /// [_SignupData] represents the data required to signup
 class _SignupData {
@@ -30,8 +32,8 @@ class _SignupPageState extends State<SignupPage> {
 
   final GlobalKey<FormState> _formLoginKey = GlobalKey<FormState>();
   final _SignupData _data = _SignupData();
-  final RegExp usernameReg = RegExp(r'^[a-zA-Z0-9]+$');
-  final RegExp emailReg = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+  final RegExp usernameReg = properties['regexLabel']['username'];
+  final RegExp emailReg = properties['regexLabel']['email'];
 
   bool _obscurePassword = true;
   String _currentPassword;
@@ -72,10 +74,9 @@ class _SignupPageState extends State<SignupPage> {
             child: Column(
               children: <Widget>[
                 // Username section
-                TextFormField(
-                  decoration: const InputDecoration(
-                    labelText: 'Username',
-                  ),
+                CTextFormField(
+                  isObscure: false,
+                  text: 'Username',
                   validator: (String value) {
                     if (value.trim().isEmpty) {
                       return 'Please enter a username';
@@ -88,10 +89,9 @@ class _SignupPageState extends State<SignupPage> {
                   onSaved: (String username) => _data.username = username.trim(),
                 ),
                 // Email section
-                TextFormField(
-                  decoration: const InputDecoration(
-                    labelText: 'Email',
-                  ),
+                CTextFormField(
+                  isObscure: false,
+                  text: 'Email',
                   validator: (String value) {
                     if (value.trim().isEmpty) {
                       return 'Please enter your email';
@@ -104,18 +104,9 @@ class _SignupPageState extends State<SignupPage> {
                   onSaved: (String email) => _data.email = email.trim(),
                 ),
                 // Password section
-                TextFormField(
-                  decoration: InputDecoration(
-                    labelText: 'Password',
-                    suffix: IconButton(
-                      icon: _obscurePassword ? Icon(Icons.visibility) : Icon(Icons.visibility_off),
-                      onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
-                      splashColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
-                    ),
-                  ),
-                  obscureText: _obscurePassword,
-                  onChanged: (String value) => _currentPassword = value,
+                CTextFormField(
+                  isObscure: true,
+                  text: 'Password',
                   validator: (String value) {
                     if (value.trim().isEmpty) {
                       return 'Please enter a password';
@@ -126,17 +117,14 @@ class _SignupPageState extends State<SignupPage> {
                     return null;
                   },
                   onSaved: (String password) => _data.password = password.trim(),
+                  onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
+                  obscurePassword: _obscurePassword,
+                  obscureText: _obscurePassword,
+                  onChanged: (String value) => _currentPassword = value,
                 ),
-                TextFormField(
-                  decoration: InputDecoration(
-                    labelText: 'Confirm your password',
-                    suffix: IconButton(
-                      icon: _obscurePassword ? Icon(Icons.visibility) : Icon(Icons.visibility_off),
-                      onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
-                      splashColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
-                    ),
-                  ),
+                CTextFormField(
+                  isObscure: true,
+                  text: 'Confirm your password',
                   obscureText: _obscurePassword,
                   validator: (String value) {
                     if (value.trim() != _currentPassword) {
@@ -144,6 +132,8 @@ class _SignupPageState extends State<SignupPage> {
                     }
                     return null;
                   },
+                  onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
+                  obscurePassword: _obscurePassword,
                 ),
               ]
             ),

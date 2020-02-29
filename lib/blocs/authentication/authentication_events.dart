@@ -64,7 +64,17 @@ class GoToSignup extends AuthenticationEvent {
 }
 
 /// Event : A button is pressed to change user's password
-class ResetPasswordButtonPressed extends AuthenticationEvent {}
+class ResetPasswordButtonPressed extends AuthenticationEvent {
+  const ResetPasswordButtonPressed({this.email});
+
+  final String email;
+
+  @override
+  List<Object> get props => <Object>[email];
+
+  @override
+  String toString() => 'ResetPasswordButtonPressed { email: $email }';
+}
 
 /// Event : The user wants to rest its password
 class GoToResetPassword extends AuthenticationEvent {}

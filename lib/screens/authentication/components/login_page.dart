@@ -3,7 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
 import 'package:flutter_firebase_login_boilerplate/blocs/authentication/authentication_bloc.dart';
 import 'package:flutter_firebase_login_boilerplate/blocs/authentication/authentication_events.dart';
+import 'package:flutter_firebase_login_boilerplate/configuration/properties/properties.dart';
 import 'package:flutter_firebase_login_boilerplate/configuration/theme/custom_font_style.dart';
+import 'package:flutter_firebase_login_boilerplate/screens/components/ctext_form_field.dart';
 
 /// [_LoginData] represents the data required in order to login
 class _LoginData {
@@ -29,7 +31,7 @@ class _LoginPageState extends State<LoginPage> {
 
   final GlobalKey<FormState> _formLoginKey = GlobalKey<FormState>();
   final _LoginData _data = _LoginData();
-  final RegExp emailReg = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+  final RegExp emailReg = properties['regexLabel']['email'];
 
   bool _obscurePassword = true;
 
@@ -69,10 +71,9 @@ class _LoginPageState extends State<LoginPage> {
             child: Column(
               children: <Widget>[
                 // Email section
-                TextFormField(
-                  decoration: const InputDecoration(
-                    labelText: 'Email',
-                  ),
+                CTextFormField(
+                  isObscure: false,
+                  text: 'Email',
                   validator: (String value) {
                     if (value.trim().isEmpty) {
                       return 'Please enter your email';
@@ -85,16 +86,11 @@ class _LoginPageState extends State<LoginPage> {
                   onSaved: (String email) => _data.email = email.trim(),
                 ),
                 // Password section
-                TextFormField(
-                  decoration: InputDecoration(
-                    labelText: 'Password',
-                    suffix: IconButton(
-                      icon: _obscurePassword ? Icon(Icons.visibility) : Icon(Icons.visibility_off),
-                      onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
-                      splashColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
-                    ),
-                  ),
+                CTextFormField(
+                  isObscure: true,
+                  text: 'Password',
+                  obscurePassword: _obscurePassword,
+                  onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
                   obscureText: _obscurePassword,
                   validator: (String value) {
                     if (value.trim().isEmpty) {
@@ -112,7 +108,7 @@ class _LoginPageState extends State<LoginPage> {
           ),
         ),
         SizedBox(
-          height: MediaQuery.of(context).size.height*0.1,
+          height: MediaQuery.of(context).size.height*0.25,
         ),
         GradientButton(
           child: const Text('Log In'),

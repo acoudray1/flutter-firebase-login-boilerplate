@@ -45,16 +45,17 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-
 flutter:
   uses-material-design: true
+  assets:
+    - assets/forgot_pwd.jpg
 
+# Main font for the app
 fonts: 
-  
-  # Main font for the app
   - family: Roboto
     fonts:
     - asset: assets/fonts/Roboto-Light.ttf
       weight: 200
     - asset: assets/fonts/Roboto-Medium.ttf
       weight: 400
+    
