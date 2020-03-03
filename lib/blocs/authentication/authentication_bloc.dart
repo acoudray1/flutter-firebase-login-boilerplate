@@ -61,15 +61,20 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
     /// If the email is not verified sends [Failure] and [EmailNotVerified], else sends [ApplicationBloc.LoggedIn]
     /// and [Initial].
     if (event is EmailVerifiedButtonPressed) {
-      final bool isEmailVerified = await userRepository.userVerified();
+      final dynamic isEmailVerified = await userRepository.userVerified();
 
-      if (isEmailVerified) {
+      if (isEmailVerified is bool && isEmailVerified) {
         applicationBloc.add(LoggedIn());
         yield Initial();
       } else {
         yield Failure(error: 'Your email is not verified');
         yield EmailNotVerified();
       }
+    }
+
+    /// Sends to [EmailNotVerified] state
+    if (event is GotToEmailVerification) {
+      yield EmailNotVerified();
     }
 
     /// Send a new email verification to the user

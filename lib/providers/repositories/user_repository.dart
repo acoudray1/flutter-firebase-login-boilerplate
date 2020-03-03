@@ -57,7 +57,7 @@ class UserRepository {
   }
 
   /// [userVerified] checks if the user verified its email
-  Future<bool> userVerified() async {
+  Future<dynamic> userVerified() async {
     return await firebaseAPI.isEmailVerified();
   }
 

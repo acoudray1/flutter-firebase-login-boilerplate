@@ -62,12 +62,16 @@ class FirebaseAPI implements AbstractFirebaseAPI {
 
   /// [isEmailVerified] verifies that the user's mail is valid
   @override
-  Future<bool> isEmailVerified() async {
+  Future<dynamic> isEmailVerified() async {
     final FirebaseUser user = await _firebaseAuth.currentUser();
+    dynamic ret = '';
+
     if (user is FirebaseUser) {
       await user.reload();
+      ret = user.isEmailVerified;
     }
-    return user.isEmailVerified;
+    
+    return ret;
   }
 
   /// [forgotPassword] sends an email to the user to change its password

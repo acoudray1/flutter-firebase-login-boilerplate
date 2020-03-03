@@ -22,7 +22,7 @@ abstract class AbstractFirebaseAPI {
   Future<void> signOut();
 
   /// [isEmailVerified] verifies that the user's mail is valid
-  Future<bool> isEmailVerified();
+  Future<dynamic> isEmailVerified();
 
   /// [forgotPassword] sends an email to reset password
   Future<void> forgotPassword(String email);

@@ -82,6 +82,9 @@ class GoToResetPassword extends AuthenticationEvent {}
 /// Event : The email verified button is pressed
 class EmailVerifiedButtonPressed extends AuthenticationEvent {}
 
+/// Event : The user must verify its email
+class GotToEmailVerification extends AuthenticationEvent {}
+
 /// Event : Send a new email to the user
 class SendEmailVerificationButtonPressed extends AuthenticationEvent {}
 

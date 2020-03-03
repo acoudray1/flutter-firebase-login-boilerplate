@@ -15,14 +15,16 @@ class ApplicationBloc extends Bloc<ApplicationEvent, ApplicationState> {
     /// Checks if a user is already logged in and if its email is verified, then sends to [LoggedIn] 
     /// state, if not it adds [UserUnauthenticated].
     if (event is AppStarted) {
-      yield UserUnauthenticated(userMustVerifyEmail: false);
-      final bool isUserVerified = await userRepository.userVerified();
+      yield Loading();
+      final dynamic isUserVerified = await userRepository.userVerified();
       final bool userExists = await userRepository.checkUserState();
 
-      if (userExists && isUserVerified) {
-        add(LoggedIn());
-      } else if (userExists && !isUserVerified) {
-        yield UserUnauthenticated(userMustVerifyEmail: true);
+      if (isUserVerified is bool) {
+        if (userExists && isUserVerified) {
+          add(LoggedIn());
+        } else if (userExists && !isUserVerified) {
+          yield UserUnauthenticated(userMustVerifyEmail: true);
+        }
       } else {
         yield UserUnauthenticated(userMustVerifyEmail: false);
       }

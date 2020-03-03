@@ -5,6 +5,7 @@ import 'package:flutter_firebase_login_boilerplate/blocs/authentication/authenti
 import 'package:flutter_firebase_login_boilerplate/blocs/authentication/authentication_events.dart';
 import 'package:flutter_firebase_login_boilerplate/configuration/theme/custom_font_style.dart';
 
+/// [EmailVerificationPage] page where the user must verify its email
 class EmailVerificationPage extends StatelessWidget {
 
   @override

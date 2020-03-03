@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_firebase_login_boilerplate/blocs/application/root_bloc.dart';
 import 'package:flutter_firebase_login_boilerplate/blocs/application/root_events.dart';
 import 'package:flutter_firebase_login_boilerplate/blocs/authentication/authentication_bloc.dart';
+import 'package:flutter_firebase_login_boilerplate/blocs/authentication/authentication_events.dart';
 import 'package:flutter_firebase_login_boilerplate/blocs/authentication/authentication_states.dart';
 import 'package:flutter_firebase_login_boilerplate/screens/authentication/components/email_verification_page.dart';
 import 'package:flutter_firebase_login_boilerplate/screens/authentication/components/forgot_password_page.dart';
@@ -14,18 +15,29 @@ import 'package:flutter_firebase_login_boilerplate/screens/components/informatio
 
 /// [WelcomePage] entry point for login page's widgets
 class WelcomePage extends StatelessWidget {
+
+  const WelcomePage({Key key, this.userMustVerifyEmail = false}) : super(key: key);
+
+  final bool userMustVerifyEmail;
   
   @override
   Widget build(BuildContext context) {
+    final RootBloc rootBloc = BlocProvider.of<RootBloc>(context);
+    if (userMustVerifyEmail) {
+      BlocProvider.of<AuthenticationBloc>(context).add(GotToEmailVerification());
+    }
+    
     return BlocListener<AuthenticationBloc, AuthenticationState>(
       listener: (BuildContext context, AuthenticationState state) {
         if (state is Failure) {
-          BlocProvider.of<RootBloc>(context)
-            .add(ThrowError(icon: Icons.error, title: 'An error occured', message: state.error));
+          rootBloc.add(ThrowError(icon: Icons.error, title: 'An error occured', message: state.error));
         }
         if (state is ResetPasswordEmailSent) {
-          BlocProvider.of<RootBloc>(context)
-            .add(ThrowInformation(icon: Icons.notifications_active, title: 'Email sent', message: 'The reset email has been sent'));
+          rootBloc.add(ThrowInformation(
+            icon: Icons.notifications_active,
+            title: 'Email sent',
+            message: 'The reset email has been sent'
+          ));
         }
       },
       child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
