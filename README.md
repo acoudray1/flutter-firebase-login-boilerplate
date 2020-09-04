@@ -88,7 +88,7 @@ The application file tree is like the following :
             (-> on IOS : `ios/Runner/` (don't forget to use XCode to do that))
 8. Run the application, everything should work fine
 
-P.S. : If there is any bug or if you encounter any problem you can contact me [here](mailto: axelcoudray1@gmail.com).
+P.S. : If there is any bug or if you encounter any problem you can contact me [here](axelcoudray1@gmail.com).
       
 
 
